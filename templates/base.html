@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+{% load bootstrap3 %}
+{% load i18n %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="keywords" content="Doctorado, Docencia"/>
+    <meta name="author" content="Lic Rodolfo Pérez Matar">
+    <title> {% include 'title.html' %}</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/skins/skin-blue.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/iCheck/all.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
+    <!--Fuente de iconos-->
+    <link rel="stylesheet" href=" {% static 'iconfont/material-icon/material-icons.css' %}"/>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+{% block contenido_login %}{% endblock %}
+{% block content %}{% endblock %}
+
+<!-- preload-->
+{#        <div class="overlay">#}
+{#        <i class="fa fa-refresh fa-spin"></i>#}
+{#      </div>#}
+<!-- Fin preload-->
+
+
+{#    {% block content %}#}
+{#        <div class="col-md-12">#}
+{#          <h1>Acceder</h1>#}
+{#          <form class="login" method="POST" action=".">#}
+{#            {% csrf_token %}#}
+{#            {% bootstrap_form form %}#}
+{#            <button class="btn btn-success primaryAction" type="submit">Acceder </button>#}
+{#          </form>#}
+{#        </div>#}
+{#    {% endblock %}#}
+
+
+<!-- Script de carga -->
+{#  <script>#}
+{#    window.addEventListener('load', () => {#}
+{#      setTimeout(carga, 2000); // lo comento porque es solo para retrasar y simular la carga del sitio#}
+{#      // carga();#}
+{#      function carga() {#}
+{#        document.getElementById('circulo').className = 'hide'; // ocultar#}
+{#        document.getElementById('contenido').className = 'animated fadeIn'; // efecto de entrada#}
+{#      }#}
+{#    });#}
+{#  </script>#}
+<!-- FIN Script de carga -->
+<!--Jquery-->
+{% block javascripts %}
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+{% endblock %}
+{% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+{% load i18n %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% include 'title.html' %}</title>
+    <meta name="description" content="{% include 'title.html' %}">
+    <meta name="keywords" content="Doctorado, Docencia" />
+    <meta name="author" content="Lic Rodolfo Pérez Matar">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
+    <!--Fuente de iconos-->
+    <link rel="stylesheet" href=" {% static 'iconfont/material-icon/material-icons.css' %}" />
+    <script defer src="{% static 'iconfont/fontawesome/all.js' %}"></script>
+    <!--Bootstrap CSS-->
+
+    <!--Materialize CSS-->
+    <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- Custom Style for me -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+      <!-- preload-->
+      <div class="center section" id="circulo">
+        <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- Fin preload-->
+ <div class="hide" id="contenido">
+    {% include 'header.html' %}
+    {% block content %}{% endblock %}
+    {% include 'footer.html' %}
+ </div>
+  <!-- Menu en cuando se pequeño sino lo pongo fuera del contenido deja un espacio en blanco al final del sitio-->
+  <ul class="sidenav" id="menu-responsive">
+    <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
+    <li class="divider"></li>
+    <li><a href="{% url 'login' %}"><i class="material-icons">person</i>Entrar</a></li>
+    <li class="divider"></li>
+    <li><a href="{% url 'contacto' %}"><i class="material-icons">contacts</i>Contacto</a></li>
+    <li class="divider"></li>
+  </ul> <!-- Menu en cuando se pequeño sino lo pongo fuera del contenido deja un espacio en blanco al final del sitio-->
+  <!-- Script de carga -->
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(carga, 2000); // lo comento porque es solo para retrasar y simular la carga del sitio
+      // carga();
+      function carga() {
+        document.getElementById('circulo').className = 'hide'; // ocultar
+        document.getElementById('contenido').className = 'animated fadeIn'; // efecto de entrada
+      }
+    });
+  </script>   <!-- FIN Script de carga -->
+    <!--Jquery-->
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+
+    <!--Script de Materialize-->
+       <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      M.AutoInit();
+    });
+  </script>
+    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script src="{% static 'js/slide.js' %}"></script>
+
+  <script src="{% static 'js/parralax.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

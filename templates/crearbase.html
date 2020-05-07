@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+{% block extra_css %}
+    <link href="{% static 'css/chosen.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}"
+          rel="stylesheet">
+{% endblock %}
+{% block crearexpedienteactive %} active {% endblock %}
+{% block contenttitle %}
+    Crear Expediente (Anexo 2)
+{% endblock contenttitle %}
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+    <li><a href="{% url 'listar_expedientes' %}"><i class="fa fa-file-o"></i> Expediente</a></li>
+    <li><a href="{{ create_url }}"><i class="fa fa-edit"></i> {{ etiqueta }}</a></li>
+{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    {% if action == 'crear' %}
+                        <i class="fa fa-plus"></i>
+                    {% else %}
+                        <i class="fa fa-edit"></i>
+                    {% endif %}
+                    {{ title }}
+                </h3>
+            </div>
+
+            <div class="box-body">
+                <input type="hidden" name="action" value="{{ action }}">
+                {% csrf_token %}
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="numero_expediente"> {{ field.label }}: <span class="required"></span></label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-success btn-flat">
+                    <i class="fa fa-save"></i> Guardar Registro
+                </button>
+                <a href="{{ list_url }}" type="submit" class="btn btn-default btn-flat">
+                    <i class="fa fa-remove"></i> Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+{% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <script src="{% static 'js/moment-with-locales.min.js' %}"></script>
+    <script src="{% static 'bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+    {#    <script src="{% static 'js/validacion.js' %}"></script>#}
+
+    <script>
+        {# Mensajes de errores #}
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                title: 'Error!',
+                text: errors,
+                icon: 'error'
+            });
+        {% endif %}
+        {# Alertas #}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = $(this).serializeArray();
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(".chosen-select").chosen({
+            width: '100%',
+            allow_single_deselect: true,
+            no_results_text: "No se encuentra el resultado!"
+        });
+        //Date
+        $('.date-picker').datepicker({
+            format: 'dd/mm/yyyy',
+            locale: 'es',
+            autoclose: true
+        })
+    </script>
+    <script>//Script de Vincular continente con pais con estado_provincia con municipio
+    //Pais
+    $("#id_continente").change(function () {
+        let urlPais = $("#expedienteForm").data("paises-url");
+        let continenteid = $(this).val();
+        //console.log(urlPais);
+        //console.log(continenteid);
+        $.ajax({
+            url: urlPais,
+            data: {
+                'continente': continenteid
+            },
+            success: function (response) {
+                $("#id_pais").html(response);
+            }
+        })
+    });
+    //Estado
+    $("#id_pais").change(function () {
+        let urlEstados = $("#expedienteForm").data("estados-url");
+        let paisid = $(this).val();
+        //console.log(urlEstados);
+        //console.log(paisid);
+        $.ajax({
+            url: urlEstados,
+            data: {
+                'pais': paisid
+            },
+            success: function (response) {
+                $("#id_provincia").html(response);
+            }
+        })
+    });
+    //Municipio
+    $("#id_provincia").change(function () {
+        let urlMunicipios = $("#expedienteForm").data("municipios-url");
+        let provinciaid = $(this).val();
+        console.log(urlMunicipios);
+        console.log(provinciaid);
+        $.ajax({
+            url: urlMunicipios,
+            data: {
+                'provincia': provinciaid
+            },
+            success: function (response) {
+                $("#id_municipio").html(response);
+            }
+        })
+    });
+    </script>
+{% endblock %}

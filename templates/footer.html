@@ -1,0 +1,60 @@
+{% load static %}
+{% load i18n %}
+
+<!-- Footer -->
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Escuela Nacional de Salud Pública</h5>
+            <img src="{% static '/img/favicon2.png' %}" style="height: 50px;" class="left">
+            <p class="grey-text text-lighten-4">Formación y desarrollo del capital humano en salud pública, en cuanto a
+              doctorados, especialidades, maestrías y otras formas organizativas de la docencia, tanto en el ámbito
+              nacional como internacional. Gestión y desarrollo de investigaciones en organización, eficiencia y calidad
+              de los servicios de salud así como consultorías y otros servicios científico-técnicos en salud pública..
+            </p>
+
+
+          </div>
+          <div class="col l3 s12 right">
+            <h5 class="white-text">Contenido</h5>
+            <ul>
+                <li><a class="white-text" href="{% url 'home' %}"><i class="material-icons">home</i> Inicio</a></li>
+                <li><a class="white-text" href="{% url 'contacto' %}"><i class="material-icons">email</i> Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--Footer copyright-->
+      <div class="footer-copyright">
+        <div class="container">
+          <div class="row" style="margin-bottom: 0;">
+            <div class="col s12">
+              <!--Copyright-->
+              <div class="col s6 left align-middle">
+                © Copyright {% now "Y" %} ,<a class="brown-text text-lighten-3"
+                  href="mailto:webmaster@ensap.sld.cu">Webmaster</a>
+              </div>
+              <!--Logos-->
+              <div class="col s2 center">
+                <img src="{% static '/img/python.svg' %}" style="height: 30px;" alt="Python">
+                <img src="{% static '/img/django.svg' %}" style="height: 30px;" alt="Django">
+              </div>
+              <!--Redes Sociales-->
+              <div class="col s2 right">
+                <span style="font-size: 2rem;">
+                  <a href="https://www.facebook.com/pages/Escuela-Nacional-de-Salud-P%C3%BAblica/256526987790385"
+                    title="Facebook" target="_blank"><i class="fab fa-facebook-f" style="color: #2980b9;"></i></a>
+                  <a href="https://twitter.com/cubaensap" title="Twitter" target="_blank"> <i class="fab fa-twitter"
+                      style="color: #3498db;"></i></a>
+                  <a href="http://www.ensap.sld.cu/rss.xml" target="_blank"> <i class="fa fa-rss"
+                      style="color: #e67e22;"></i></a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </footer> <!-- Fin Footer -->

@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+
+span.required {
+    color: red;
+    content: '&nbsp;';
+    font-size: 20px;
+    line-height: 0;
+    font-weight: bold;
+}
+
+span.required::before {
+    content: '*';
+}
+
+.form-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid #f4f4f4;
+    padding-bottom: 3px;
+}

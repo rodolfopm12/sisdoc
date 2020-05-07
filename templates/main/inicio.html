@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% block espacioactive %} active  {% endblock %}
+{% block contenttitle %}
+Espacio de Trabajo
+{% endblock contenttitle %}
+ {% block boxes %}
+     {% include 'main/admin.html' %}
+ {% endblock %}
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+
+{% endblock %}
+
+{% block content %}
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="box-title"> Inicio</h3>
+             <i class="fa fa-calendar pull-right"> {% now "d-m-Y" %}</i>
+        </div>
+        <div class="box-body">
+           <div class="callout callout-success">
+            <h4 class="title text-center"><i class="icon fa fa-home"></i> Bienvenido al {% include 'title.html' %} a Iniciado Sesión {{ user.first_name }} {{ user.last_name }}</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+        <div class="card-content">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Datos del {% include 'title.html' %}</h3>
+                </div>
+                <div class="box-body">
+                    <ul class="nav nav-stacked">
+                        <li>
+                            <strong class="title text-center"><i class="icon fa fa-users"></i> Total de usuarios registrados: </strong><span class="pull-right badge bg-green">{{ cantidad_usuarios }} </span>
+                        </li>
+                        <li>
+                            <strong class="title text-center"><i class="icon fa fa-files-o"></i> Total de expedientes activos: </strong><span class="pull-right badge bg-green">{{ cantidad_expedientes }}</span>
+                        </li>
+                        <li>
+                            <strong class="title text-center"><i class="icon fa fa-paper-plane-o"></i> Total de Eventos: </strong><span class="pull-right badge bg-green">{{ cantidad_expedientes }}</span>
+                        </li>
+                        <li>
+                            <strong class="title text-center"><i class="icon fa fa-file-pdf-o"></i> Total de Publicaciones: </strong><span class="pull-right badge bg-green">{{ cantidad_expedientes }}</span>
+                        </li>
+                         <li>
+                            <strong class="title text-center"><i class="icon fa fa-graduation-cap"></i> Total de Graduados: </strong><span class="pull-right badge bg-green">{{ cantidad_expedientes }}</span>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+    <div class="col-md-4">
+        <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-aqua-active">
+              <div class="widget-user-image">
+                 <img class="img-circle" src="{{ user.profile.foto.url }}" alt="User Avatar">
+              </div>
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">{{ user.first_name }} {{ user.last_name }}</h3>
+              <h5 class="widget-user-desc">{{ group.name }} {{ profesion.name }}</h5>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a href="#">Eventos <span class="pull-right badge bg-blue">31</span></a></li>
+                <li><a href="#">Publicaciones <span class="pull-right badge bg-aqua">5</span></a></li>
+                <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
+                <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li>
+              </ul>
+                <div class="box-footer">
+                    <h8><strong>Iniciado sesión por útlima vez:</strong> {{ user.last_login }}</h8>
+                </div>
+            </div>
+          </div>
+    </div>
+    </div>
+
+
+{% endblock content %}
