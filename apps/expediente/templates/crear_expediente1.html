@@ -1,0 +1,598 @@
+{#{% extends "crearbase.html" %}#}
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+{% block crearexpedienteactive %} active {% endblock %}
+{% block extra_css %}
+    <link href="{% static 'css/chosen.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}"
+          rel="stylesheet">
+{% endblock %}
+{% block contenttitle %}
+    Crear Expediente (Anexo 2)
+{% endblock contenttitle %}
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+    <li><a href="{{ list_url }}{#  {% url 'listar_expedientes' %} #} "><i class="fa fa-file-o"></i> Expediente</a></li>
+    <li><a href="{{ crear_url }}"><i class="fa fa-edit"></i>{{ etiqueta }}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="box-header with-border" style="margin-bottom: 10px;">
+                <h3 class="box-title">
+                    {% if action == 'crear' %}
+                        <i class="fa fa-plus"></i>
+                    {% else %}
+                        <i class="fa fa-edit"></i>
+                    {% endif %}
+                    {{ title }}
+                </h3>
+            </div>
+
+            <form id="expedienteForm" action="." method="POST"
+                  enctype="multipart/form-data" data-paises-url="{% url 'ajax_load_pais' %}"
+                  data-estados-url="{% url 'ajax_load_estados' %}" data-municipios-url="{% url 'ajax_load_municipio' %}"
+                  novalidate>
+                {% csrf_token %}
+                <!-- Expediente -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form.numero_acuerdo.label_tag }} <span class="required"></span>
+                            {{ form.numero_acuerdo.errors }}
+                            {{ form.numero_acuerdo }}
+                            {#                            {% render_field form.numero_acuerdo class='form-control' %}#}
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form.numero_expediente.label_tag }} <span class="required"></span>
+                            {{ form.numero_expediente.errors }}
+                            {{ form.numero_expediente }}
+                            {#                            {% render_field form.numero_expediente class='form-control' %}#}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form.estado.label_tag }}<span class="required"></span>
+                            {{ form.estado.errors }}
+                            {{ form.estado }}
+
+                            {#                                        {% render_field form.estado class='icheckbox_flat-green checked' %}#}
+                        </div>
+                    </div>
+                </div>
+                <h3 class="form-title">Datos del Doctorando</h3>
+                <!--Form Foto -->
+                <div class="form-group">
+                    {{ form2.image.label_tag }}
+                    {{ form2.image.errors }}
+                    <p>Actualmente: <a href="{% static 'img/empty.png' %}">{{ user.image.url }}</a></p>
+                    <span>Modificar</span>
+                    {{ form2.image }}
+
+                    <div class="help-block">Foto del usuario. Opcional.</div>
+                </div>
+                <div class="row">
+                    <!--Form Input nombre -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form2.first_name.label_tag }} <span class="required"></span>
+                            {{ form2.first_name.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                {{ form2.first_name }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Input Apellidos -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form2.last_name.label_tag }}<span class="required"></span>
+                            {{ form2.last_name.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                {{ form2.last_name }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Correo personal -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form2.email.label_tag }}<span class="required"></span>
+                            {{ form2.email.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                {{ form2.email }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form # de CI -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.ci.label_tag }}
+                            {{ form4.ci.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                {{ form4.ci }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Pasaporte -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.pasaporte.label_tag }}
+                            {{ form4.pasaporte.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+                                {{ form4.pasaporte }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Fecha de Nacimiento -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form4.fecha_nacimiento.label_tag }}<span class="required"></span>
+                            {{ form4.fecha_nacimiento.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa  fa-calendar"></i></span>
+                                {{ form4.fecha_nacimiento }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Sexo -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {{ form3.sexo.label_tag }}<span class="required"></span>
+                            {{ form3.sexo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
+                                {{ form3.sexo }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Estado Civil -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.estado_civil.label_tag }}<span class="required"></span>
+                            {{ form4.estado_civil.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-child"></i></span>
+                                {{ form4.estado_civil }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Continente -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.continente.label_tag }}<span class="required"></span>
+                            {{ form4.continente.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                {{ form4.continente }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Pais -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.pais.label_tag }}<span class="required"></span>
+                            {{ form4.pais.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-flag-o"></i></span>
+                                {{ form4.pais }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Estado -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.provincia.label_tag }}<span class="required"></span>
+                            {{ form4.provincia.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-flag-o"></i></span>
+                                {{ form4.provincia }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Municipio -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.municipio.label_tag }}
+                            {{ form4.municipio.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-flag-o"></i></span>
+                                {{ form4.municipio }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Dirección Particular -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.direccion.label_tag }}<span class="required"></span>
+                            {{ form4.direccion.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-bookmark-o"></i></span>
+                                {{ form4.direccion }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Categoría Docente -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.categoria_docente.label_tag }}
+                            {{ form4.categoria_docente.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
+                                {{ form4.categoria_docente }}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Graduado universitario -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.profesion.label_tag }}<span class="required"></span>
+                            {{ form4.profesion.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
+                                {{ form4.profesion }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Grado Científico -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.grado_cientifico.label_tag }}
+                            {{ form4.grado_cientifico.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
+                                {{ form4.grado_cientifico }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Teléfono Fijo -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.telefono_fijo.label_tag }}
+                            {{ form4.telefono_fijo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                {{ form4.telefono_fijo }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Móvil -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form4.movil.label_tag }}
+                            {{ form4.movil.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
+                                {{ form4.movil }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-header with-border" style="margin-bottom: 10px;">
+                    <h3 class="form-title">Datos del Centro laboral</h3>
+                </div>
+                <div class="row">
+                    <!--Form Nombre del Trabajo -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form5.nombre_trabajo.label_tag }}<span class="required"></span>
+                            {{ form5.nombre_trabajo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-institution"></i></span>
+                                {{ form5.nombre_trabajo }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Nombre del Organismo -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.organismo.label_tag }}<span class="required"></span>
+                            {{ form4.organismo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-institution"></i></span>
+                                {{ form4.organismo }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Cargo que ocupa -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form5.cargo_ocupa.label_tag }}<span class="required"></span>
+                            {{ form5.cargo_ocupa.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sitemap"></i></span>
+                                {{ form5.cargo_ocupa }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Dirección del Trabajo -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form5.direccion_trabajo.label_tag }}
+                            {{ form5.direccion_trabajo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-bookmark-o"></i></span>
+                                {{ form5.direccion_trabajo }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Teléfono del Trabajo -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form5.telefono_trabajo.label_tag }}
+                            {{ form5.telefono_trabajo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                {{ form5.telefono_trabajo }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Correo Trabajo -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form5.email_trabajo.label_tag }}
+                            {{ form5.email_trabajo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                {{ form5.email_trabajo }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-header with-border" style="margin-bottom: 10px;">
+                    <h3 class="form-title">Datos de la Tesis</h3>
+                </div>
+                <div class="row">
+                    <!--Form Especialidad -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form6.especialidad_doctorado.label_tag }}<span class="required"></span>
+                            {{ form6.especialidad_doctorado.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-check-square-o"></i></span>
+                                {{ form6.especialidad_doctorado }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Titulo de la tesis -->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {{ form6.titulo_tesis.label_tag }}<span class="required"></span>
+                            {{ form6.titulo_tesis.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-check-square-o"></i></span>
+                                {{ form6.titulo_tesis }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-header with-border" style="margin-bottom: 10px;">
+                    <h3 class="form-title">Datos del Tutor</h3>
+                </div>
+                <div class="row">
+                    <!--Form Nombre tutor -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form7.nombre_tutor.label_tag }}<span class="required"></span>
+                            {{ form7.nombre_tutor.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                {{ form7.nombre_tutor }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Apellido tutor -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form7.apellidos_tutor.label_tag }}<span class="required"></span>
+                            {{ form7.apellidos_tutor.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                {{ form7.apellidos_tutor }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Grado Científico -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.grado_cientifico.label_tag }}<span class="required"></span>
+                            {{ form4.grado_cientifico.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
+                                {{ form4.grado_cientifico }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Categoría docente -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.categoria_docente.label_tag }}<span class="required"></span>
+                            {{ form4.categoria_docente.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
+                                {{ form4.categoria_docente }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Nombre del Trabajo -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form5.nombre_trabajo.label_tag }}<span class="required"></span>
+                            {{ form5.nombre_trabajo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-institution"></i></span>
+                                {{ form5.nombre_trabajo }}
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Nombre del Organismo -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {{ form4.organismo.label_tag }}<span class="required"></span>
+                            {{ form4.organismo.errors }}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-institution"></i></span>
+                                {{ form4.organismo }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    {{ form3.nota.label_tag }}
+                    {{ form3.nota.errors }}
+                    {{ form3.nota }}
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> {{ etiqueta }}</button>
+                    <a href="{% url 'listar_expedientes' %}" class="btn btn-default">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script type="text/javascript" src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <script src="{% static 'js/moment-with-locales.min.js' %}"></script>
+    <script src="{% static 'bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+
+    {#    Mensajes de errores#}
+    <script>
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            Swal.fire({
+                title: 'Error!',
+                text: errors,
+                icon: 'error'
+            });
+        {% endif %}
+    </script>
+
+    <script type="text/javascript">
+        $(".chosen-select").chosen({
+            width: '100%',
+            allow_single_deselect: true,
+            no_results_text: "No se encuentra el resultado!"
+        });
+        //Date
+        $('.date-picker').datepicker({
+            format: 'dd/mm/yyyy',
+            locale: 'es',
+            autoclose: true
+        })
+    </script>
+    <script>//Script de Vincular continente con pais con estado_provincia con municipio
+    //Pais
+    $("#id_continente").change(function () {
+        let urlPais = $("#expedienteForm").data("paises-url");
+        let continenteid = $(this).val();
+        //console.log(urlPais);
+        //console.log(continenteid);
+        $.ajax({
+            url: urlPais,
+            data: {
+                'continente': continenteid
+            },
+            success: function (response) {
+                $("#id_pais").html(response);
+            }
+        })
+    });
+    //Estado
+    $("#id_pais").change(function () {
+        let urlEstados = $("#expedienteForm").data("estados-url");
+        let paisid = $(this).val();
+        //console.log(urlEstados);
+        //console.log(paisid);
+        $.ajax({
+            url: urlEstados,
+            data: {
+                'pais': paisid
+            },
+            success: function (response) {
+                $("#id_provincia").html(response);
+            }
+        })
+    });
+    //Municipio
+    $("#id_provincia").change(function () {
+        let urlMunicipios = $("#expedienteForm").data("municipios-url");
+        let provinciaid = $(this).val();
+        console.log(urlMunicipios);
+        console.log(provinciaid);
+        $.ajax({
+            url: urlMunicipios,
+            data: {
+                'provincia': provinciaid
+            },
+            success: function (response) {
+                $("#id_municipio").html(response);
+            }
+        })
+    });
+    </script>
+    <script>
+        $(function () {
+            $('.select2').select2({
+                theme: "bootstrap",
+                language: 'es',
+            });
+            $('select[name="continente"]').select2({
+                {#language: 'es',#}
+                placeholder: 'Escoja el continente',
+                allowClear: true,
+            });
+            $('select[name="pais"]').select2({
+                {#language: 'es',#}
+                placeholder: 'Escoja el pais',
+                allowClear: true,
+            });
+            $('select[name="provincia"]').select2({
+                {#language: 'es',#}
+                placeholder: 'Escoja la Provincia',
+                allowClear: true,
+            });
+            $('select[name="municipio"]').select2({
+                {#language: 'es',#}
+                placeholder: 'Escoja la Municipio',
+                allowClear: true,
+            });
+            $('select[name="profesion"]').select2({
+                language: 'es',
+                placeholder: 'Escoja la Profesión',
+                allowClear: true,
+             });
+        });
+    </script>
+{% endblock %}

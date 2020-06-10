@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+{% block extra_css %}
+    {{ super }}
+    <link rel="stylesheet" href="{% static 'css/loginstyles.css' %}">
+{% endblock %}
+
+{% block contenttitle %}
+Acceder
+{% endblock contenttitle %}
+{% block content %}
+           <!-- Loading (remove the following to stop the loading)-->
+{#            <div class="overlay">#}
+{#             <i class="fa fa-refresh fa-spin fa-5x"></i>#}
+{#            </div>#}
+            <!-- end loading -->
+
+
+    <div class="login-box">
+    <div align="center"> <img src="{% static 'img/logo_doc.png' %}" border="1" width="175px" height="auto" marggin-botton="10px"></div>
+           <br/>
+        <div class="login-box-body">
+            <div class="login-logo mb-15">
+                <a href="{% url 'home' %}"><b>Sistema de Doctorado</b></a>
+            </div>
+            <!-- /.login-logo -->
+{#            <p class="login-box-msg"></p>#}
+            <form class="login" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+            <button class="btn btn-primary primaryAction" id="loading-body-btn" type="submit">Acceder </button>
+            <a class="btn btn-default pull-right" href="{% url 'home' %}">Cancelar</a>
+            </form>
+            <p class="mt-15">
+                <a href="{% url 'password_reset' %}">¿Olvidó su contraseña?</a>
+            </p>
+            </div>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+
+
+    <!-- Footer -->
+ <footer class="main-footer">
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <!-- To the right -->
+                <div class="pull-right hidden-xs">
+                    ENSAP - SISDOC. Sistema de Doctorado
+                </div>
+                <!-- Default to the left -->
+                Copyright &copy; {% now "Y" %} <a href="http://www.ensap.sld.cu/" target="_blank">ENSAP</a>. Todos los derechos reservados.
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </footer>
+
+{% block extra_scripts %}
+       <script>
+        $(document).ready(function() {
+            $('.login-box-body').fadeIn(500);
+            $('.login-box-body').animate({'margin-top': '0px'}, 500);
+            $('footer').delay(1000).fadeIn(500);
+        });
+    </script>
+
+<script src="{% static 'js/jquery.loading.min.js' %}"></script>
+        <script>
+          $("#loading-body-btn").click(function() {
+            $("body").loading({
+              stoppable: true
+            });
+          });
+        </script>
+{% endblock %}
+{% endblock %}
+
+
+

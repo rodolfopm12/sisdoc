@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<style>
+    @page {
+        size: a4 portrait;
+    @frame header_frame {           /* Static Frame */
+        -pdf-frame-content: header_content;
+        left: 50pt; width: 512pt; top: 40pt; height: 170pt;
+     }
+        @frame content_frame { /* Content Frame */
+        left: 50pt; width: 512pt; top: 210pt; height: 632pt;
+    {#left: 25pt; right: 10pt; top: 70pt; height:650pt;#}
+    }
+    @frame footer_frame {
+        /* Another static Frame */
+    -pdf-frame-content:footer_content;
+    left: 50pt; width: 512pt; top: 772pt; height: 30pt;
+    {#left: 50pt; width: 512pt; top: 750pt; height: 20pt;#}
+    }
+    }
+
+    .img-invoice {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #invoice thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    #invoice tbody tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    #invoice tbody tr:nth-child(odd) {
+        background-color: #fff;
+    }
+</style>
+
+<body>
+<div id="header_content">
+<img src="{{ icon }}" class="img-invoice">
+<p class="head">
+    {{ comp.name|upper }}<br>
+    {{ comp.address }}<br>
+    {{ comp.sistema|upper }}
+</p>
+
+    <p>
+    <b>FECHA:</b> {{ fecha }}<br>
+    <b>REPORTE DE:</b> {{ title }}<br>
+    <b>GENERADO POR:</b> {{ user }}<br>
+    <b>CORREO:</b> {{ email }}<br>
+</p>
+</div>
+
+<div id="content">
+    <h1 class="text-center">Datos</h1>
+    <table id="invoice">
+        <thead>
+        <tr>
+            <th style="width: 30%;">DATOS</th>
+            {#                <th style="width: 30%;">CANTIDAD</th>#}
+            <th style="width: 20%; text-align: center">ACTIVOS</th>
+            <th style="width: 20%; text-align: center">DESACTIVOS</th>
+            <th style="width: 30%; text-align: center">TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="padding-top: 3px;">
+            <td>Cantidad de Expedientes</td>
+            <td class="text-center">{{ expediente_act }}</td>
+            <td class="text-center">{{ expediente_des }}</td>
+            <td class="text-center"><strong>{{ expediente }}</strong></td>
+        </tr>
+        <tr>
+            <td>Cantidad de Usuarios</td>
+            <td class="text-center">{{ cantidad_usuarios_act }}</td>
+            <td class="text-center">{{ cantidad_usuarios_des }}</td>
+            <td class="text-center"><strong>{{ cantidad_usuarios }}</strong></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    <table id="invoice">
+        <thead>
+        <tr>
+            <th style="width: 20%;">DATOS</th>
+            {#                <th style="width: 30%;">CANTIDAD</th>#}
+            <th style="width: 20%; text-align: center">TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="padding-top: 3px;">
+            <td>Cantidad de Publicaciones</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+            <td class="text-center"><strong></strong></td>
+        </tr>
+        <tr>
+            <td>Cantidad de Eventos</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+            <td class="text-center"><strong></strong></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Content for Static Frame 'footer_frame' -->
+<div style="margin-top: 600px;" id="footer_content">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top: 1px solid #757575;">
+        <tr>
+            <td width="75%" style="padding-top: 4px">
+                Reporte de: {{ title }}
+            </td>
+            <td width="25%" align="right" style="padding-top: 4px">
+                P&aacute;gina
+                <pdf:pagenumber/>
+                de
+                <pdf:pagecount/>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

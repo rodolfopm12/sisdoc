@@ -1,0 +1,61 @@
+{% extends "listbase.html" %}
+{% block listadosuarioactive %} active {% endblock %}
+{% block contenttitle %}
+    Usuarios Registrados
+{% endblock contenttitle %}
+
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+    <li><a href="{% url 'listado_usuarios' %}"><i class="fa fa-users"></i> Usuarios</a></li>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th class="text-center">Nro</th>
+        <th class="text-center">Imagen</th>
+        <th class="text-center">Nombre y Apellidos</th>
+        <th class="text-center">Correo</th>
+        <th class="text-center">Género</th>
+        <th class="text-center">Rol</th>
+        <th class="text-center">Estado</th>
+        <th class="text-center">Fecha de Registro</th>
+        <th class="text-center">Inicio de sessión</th>
+        <th class="text-center"><i class="fa fa-gear"></i></th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for user in object_list %}
+        <tr>
+            <td class="text-center">{{ user.id }}</td>
+            <td class="text-center"><img style="width: 100%; max-width: 35px; height: auto;" class="image img-circle"
+                                         src="{{ user.get_image }}"></td>
+            <td class="text-center">{{ user.first_name }} {{ user.last_name }}</td>
+            <td class="text-center">{{ user.email }}</td>
+            <td class="text-center"> {{ user.userprofile.get_sexo_display }}</td>
+            <td class="text-center">
+                {% if user.is_superuser %}
+                    Super Usuario
+                {% else %}
+                    {{ user.groups.first }}
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if user.is_active %}
+                    <i class='fa fa-check-square' style="color: green"></i>
+                {% else %}
+                    <i class='fa fa-minus-square' style="color: red"></i>
+                {% endif %}
+            </td>
+            <td class="text-center">{{ user.date_joined|date }}</td>
+            <td class="text-center">{{ user.last_login }}</td>
+            <td class="text-center">
+                <a class="btn btn-warning" href="{% url 'usuarios_update' user.id %} "><i
+                        class="fa fa-edit"></i></a>
+                <a class="btn btn-danger eliminar" href=" {% url 'eliminar_usuario' user.id %} "><i
+                        class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+

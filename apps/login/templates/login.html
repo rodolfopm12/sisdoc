@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+{% load static %}
+{% block extra_css %}
+    {{ super }}
+    <link rel="stylesheet" href="{% static 'css/loginstyles.css' %}">
+    <script src="{% static 'lib/sweetalert2-9.10.0/sweetalert2.all.min.js' %}"></script>
+{% endblock %}
+
+{% block contenttitle %}
+    Acceder
+{% endblock contenttitle %}
+{% block content %}
+    <div class="login-box">
+        <div align="center"><img src="{% static 'img/logo_doc.png' %}" border="1" width="175px" height="auto"
+                                 marggin-botton="10px">
+        </div>
+        <br/>
+        <div class="login-box-body">
+            <div class="login-logo mb-15">
+                <a href="{% url 'home' %}"><b>Sistema de Doctorado</b></a>
+            </div>
+            <form class="login" method="POST" action=". {# {% url 'login' %} #}">
+                <input type="hidden" name="next" value="{{ next }}">
+                {% csrf_token %}
+                {#                {% bootstrap_form form %}#}
+                <div class="form-group has-feedback">
+                    {{ form.username|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder:Ingrese el Correo electrónico' }}
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    {{ form.password|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder:Ingrese su contraseña' }}
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                {#                {% if redirect_field_value %}#}
+                {#                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>#}
+                {#                {% endif %}#}
+                <button class="btn btn-primary primaryAction" id="loading-body-btn" type="submit">
+                    <i class="fa fa-sign-in"></i> Acceder
+                </button>
+                <a class="btn btn-default pull-right" href="{% url 'home' %}">Cancelar</a>
+            </form>
+
+            <p class="mt-15" style="text-align: center; border-top: 1px solid #f4f4f4"> Si has olvidado tu contraña
+                <a href="{% url 'password_reset' %}">da click aquí <i class="fa fa-key"></i> </a>
+            </p>
+
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <!-- To the right -->
+                <div class="pull-right hidden-xs">
+                    ENSAP - SISDOC. Sistema de Doctorado
+                </div>
+                <!-- Default to the left -->
+                Copyright &copy; {% now "Y" %} <a href="http://www.ensap.sld.cu/" target="_blank">ENSAP</a>. Todos los
+                derechos reservados.
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </footer>
+{% endblock %}
+{% block extra_scripts %}
+    <script>
+        $(document).ready(function () {
+            $('.login-box-body').fadeIn(500);
+            $('.login-box-body').animate({'margin-top': '0px'}, 500);
+            $('footer').delay(1000).fadeIn(500);
+        });
+    </script>
+
+    <script src="{% static 'js/jquery.loading.min.js' %}"></script>
+    {#    <script>#}
+    {#        $("#loading-body-btn").click(function () {#}
+    {#            $("body").loading({#}
+    {#                stoppable: true#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+    {# Mensajes de errores #}
+    <script type="application/javascript">
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                title: 'Error!',
+                text: errors,
+                icon: 'error'
+            });
+        {% endif %}
+    </script>
+{% endblock %}
+
+
+

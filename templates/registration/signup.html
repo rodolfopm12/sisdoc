@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load widget_tweaks %}
+{% block crearusuarioactive %} active {% endblock %}
+{% block contenttitle %}
+Crear Usuario del sistema
+{% endblock contenttitle %}
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+     <li><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Crear Usuario</a></li>
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h2 class="box-title">Crear Usuario</h2>
+        </div>
+        <div class="box-body">
+            <form method="post">
+            {% csrf_token %}
+           {% bootstrap_form form %}
+                <div class="box-footer">
+                <button class="btn btn-success" type="submit">Crear usuario</button>
+                <a class="btn btn-default" href="{% url 'inicio' %}">Cancelar</a>
+                </div>
+            </form>
+         </div>
+    </div>
+{% endblock %}

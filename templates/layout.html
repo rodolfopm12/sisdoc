@@ -5,14 +5,17 @@
 {% block styles %}
     <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
     <link rel="stylesheet" href="{% static 'dist/css/skins/skin-blue.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/iCheck/all.css' %}">
+    <!-- CSS por Webmaster -->
     <link rel="stylesheet" href="{% static 'css/csslayaout.css' %}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
     <!--Fuente de iconos-->
     <link rel="stylesheet" href=" {% static 'iconfont/material-icon/material-icons.css' %}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/select2/css/select2-bootstrap.css' %}">
     <!-- jQuery 3 -->
     <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
     <!-- Sweetalert2 -->
@@ -20,6 +23,8 @@
     <!-- jQuery Confirm -->
     <link rel="stylesheet" href="{% static 'lib/jquery-confirm/jquery-confirm.min.css' %}">
     <script src="{% static 'lib/jquery-confirm/jquery-confirm.min.js' %}"></script>
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
     <!-- Functions -->
     <script src="{% static 'js/functions.js' %}"></script>
 
@@ -34,11 +39,14 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="#" class="logo">
+            <a href="{% url 'inicio' %}" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">Menú</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">SISDOC</span>
+                <span class="logo-lg"><img src="{% static 'img/logo.png' %}"
+                                           alt="SISDOC"
+                                           class="user-image"
+                                           style="max-width:35px;">SISDOC</span>
             </a>
 
             <!-- Header Navbar -->
@@ -57,11 +65,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
                                 {#                {% with profile=user|profile %}#}
-                                <img src="
-
-
-                                        {{ user.profile.foto.url }}{#{% static 'media/miembros/' %}/{{ user.profile.foto }} #}"
-                                     class="user-image" alt="User Image">
+                                <img src="{{ request.user.get_image }}" class="user-image" alt="User Image">
                                 {#                <img class="user-image" src="{% static 'media/../static/uploads/miembros/Ileana.png' %}" alt="User profile picture">#}
                                 {#              {% endwith %}#}
 
@@ -73,33 +77,35 @@
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
                                     {#                <img src="{% static 'media/miembros/none.png' %}" class="img-circle" alt="User Image">#}
-                                    <img class="img-circle" src="{{ user.profile.foto.url }}"
+                                    <img class="img-circle" src="{{ request.user.get_image }}"
                                          alt="User profile picture">
 
                                     <p>
                                         {{ request.user.first_name }}
-                                        <small>Miembro desde el {{ user.date_joined|date }}</small>
+                                        <small>Último acceso: {{ user.last_login|date }}</small>
+                                        <small>{{ request.user.email }}</small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
-                                {#              <li class="user-body">#}
-                                {#                <div class="row">#}
-                                {#                  <div class="col-xs-4 text-center">#}
-                                {#                    <a href="#">Followers</a>#}
-                                {#                  </div>#}
-                                {#                  <div class="col-xs-4 text-center">#}
-                                {#                    <a href="#">Sales</a>#}
-                                {#                  </div>#}
-                                {#                  <div class="col-xs-4 text-center">#}
-                                {#                    <a href="#">Friends</a>#}
-                                {#                  </div>#}
-                                {#                </div>#}
-                                <!-- /.row -->
-                                {#                                </li>#}
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class=" text-center">
+                                            <strong>Bienvenido al Sistema, su perfil es
+                                                {% if user.is_superuser %}
+                                                    Administrador
+                                                {% else %}
+                                                    {{ user.groups.first }}
+                                                {% endif %}
+                                            </strong>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.row -->
+                                </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#{# {% url 'perfil' %} #}" class="btn btn-default btn-flat">Perfil</a>
+                                        <a href="{% url 'perfil' %}" class="btn btn-default btn-flat">Perfil</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="{% url 'logout' %}" class="btn btn-default btn-flat">Salir</a>
@@ -132,11 +138,7 @@
                     <div class="pull-left image">
                         {#  {% with profile=user|profile %} {% endwith %}#}
                         {#            <img src="{% static 'media/miembros/' %}/{{ profile.foto }}" class="img-circle" alt="User Image">#}
-
-                        {#      <img src="{% static 'media/miembros/none.png' %}" class="img-circle" alt="User Image">#}
-                        <img class="img-circle" src="{{ user.profile.foto.url }}
-                                {#{% static 'media/../static/uploads/miembros/Ileana.png' %} #}"
-                             alt="User profile picture">
+                        <img class="img-circle" src="{{ request.user.get_image }}" alt="User profile picture">
                     </div>
                     <div class="pull-left info">
                         <p>{{ user.get_short_name }}</p>
@@ -182,7 +184,7 @@
                     <!-- Optionally, you can add icons to the links -->
                     <li class="{% block espacioactive %}{% endblock %}"><a href=" {% url 'inicio' %}"><i
                             class="fa fa-dashcube"></i><span>Espacio de Trabajo</span></a></li>
-                    <li class="{% block perfilactive %}{% endblock %}"><a href="#{# {% url 'perfil' %} #}"
+                    <li class="{% block perfilactive %}{% endblock %}"><a href="{% url 'perfil' %}"
                                                                           title="Perfil de usuario"><i
                             class="fa fa-user"></i><span>Perfil de Usuario</span></a></li>
                     <!--   <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li> -->
@@ -191,26 +193,39 @@
                         <span>RECURSOS</span><span class="pull-right-container"><i
                                 class="fa fa-angle-left pull-right"></i> </span> </a>
                         <ul class="active treeview-menu">
-                            <li><a href="# {# {% url 'crear_evento' %} #}" title="Crear Evento"><i
+                            <li class="{% block eventoactive %}{% endblock %}"><a
+                                    href="# {# {% url 'crear_evento' %} #}" title="Crear Evento"><i
                                     class="fa fa-edit"></i><span>Crear Evento</span></a></li>
-                            <li><a href="# {# {% url 'modify_profile' %} #}" title="Crear Publicaciones"><i
+                            <li class="{% block publicacionactive %}{% endblock %}"><a
+                                    href="# {# {% url 'modify_profile' %} #}" title="Crear Publicaciones"><i
                                     class="fa fa-edit"></i><span>      Publicaciones</span></a></li>
-                            <li><a href="# {# {% url 'tesisview' %} #}" title="Subir Tesis"><i
+                        </ul>
+                    </li>
+                    <li class="treeview {% block tesisoactive %}{% endblock %}"><a href="#"><i class="fa fa-edit"></i>
+                        <span>Tesis</span><span class="pull-right-container"><i
+                                class="fa fa-angle-left pull-right"></i> </span> </a>
+                        <ul class="active treeview-menu">
+                            <li class="{% block actualizartesisactive %}{% endblock %}"><a href="{% url 'tesisview' %}"
+                                                                                 title="Subir Tesis"><i
                                     class="fa fa-edit"></i><span>      Tesis</span></a></li>
+                            <li class="{% block listadoactive %}{% endblock %}"><a href="{% url 'listar_tesis' %}"
+                                                                                 title="Listado de Tesis"><i
+                                    class="fa fa-files-o"></i><span>     Listado Tesis</span></a></li>
                         </ul>
                     </li>
 
                     <li class="header">EXPEDIENTE</li>
-                    <li class="{% block crearexpedienteactive %}{% endblock %}"><a href=" {% url 'crear_expediente' %} "
-                                                                                   title="Crear Expediente"><i
+                    <li class="{% block crearexpedienteactive %}{% endblock %}"><a
+                            href="{% url 'crear_expediente' %} "
+                            title="Crear Expediente"><i
                             class="fa fa-edit"></i><span>Crear Expediente</span></a></li>
                     <li class="{% block listarexpedienteactive %}{% endblock %}"><a
                             href="{% url 'listar_expedientes' %}" title="Ver Expedientes"><i
                             class="fa fa-files-o"></i><span>Expedientes</span></a></li>
 
-                    <li class="header">INFORMES</li>
+                    <li class="header"><i class="ion ion-clipboard"></i> <span>- INFORMES</span></li>
                     <li class="{% block matriculadosactive %}{% endblock %}"><a
-                            href="# {# {% url 'destalles_matriculados' %} #}"><i class="fa fa-users"></i><span>Doctorandos Matriculados</span></a>
+                            href="{% url 'destalles_matriculados' %}"><i class="fa fa-users"></i><span>Doctorandos Matriculados</span></a>
                     </li>
                     <li><a href="# {# {% url 'profile' %} #}"><i
                             class="fa fa-pie-chart"></i><span>Cantidad de Eventos</span></a></li>
@@ -219,19 +234,22 @@
                     <li><a href="# {# {% url 'profile' %} #}"><i class="fa fa-graduation-cap"></i><span>Número de Graduados</span></a>
                     </li>
 
-
+                    {% if user|has_role:'ROLE_ADMIN' %}
+                    <li class="header"><i class="fa fa-clipboard"></i> <span>Reportes</span></li>
+                    <li class="{% block reportessactive %}{% endblock %}"><a href=" {% url 'reportes' %}"><i class="fa fa-file-pdf-o"></i><span>Reportes</span></a>
+                    {% endif %}
                     <li class="header"><i class="fa fa-shield"></i> <span>SEGURIDAD</span></li>
                     <li class=" {% block contraseaactive %}{% endblock %} "><a
-                            href="# {# {% url 'password_change' %} #} "><i class="fa fa-user"></i> <span>Contrase&ntilde;a</span></a>
+                            href="{% url 'password_change' %}"><i class="fa fa-user"></i> <span>Contrase&ntilde;a</span></a>
                     </li>
                     {% if user|has_role:'ROLE_ADMIN' %}
                         <li class="{% block crearusuarioactive %}{% endblock %}"><a
-                                href="# {# {% url 'register' %} #} "><i class="fa fa-user-plus"></i>
+                                href="{% url 'register' %} "><i class="fa fa-user-plus"></i>
                             <span>Crear Usuario</span></a></li>
                         <li><a target="_blank" href="{% url 'admin:index' %} auditlog/logentry"><i
                                 class="fa fa-building-o"></i> <span>Consultar trazas</span></a></li>
                         <li class="{% block listadosuarioactive %}{% endblock %}"><a
-                                href="# {# {% url 'listado_usuarios' %} #}"><i class="fa fa-users"></i> <span>Listado de Usuarios</span></a>
+                                href="{% url 'listado_usuarios' %}"><i class="fa fa-users"></i> <span>Listado de Usuarios</span></a>
                         </li>
                     {% endif %}
                     <li><a href="{% url 'logout' %}"><i class="fa fa-power-off"></i> <span> Cerrar sesi&oacute;n</span></a>
@@ -379,6 +397,9 @@
     <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    <!-- Select2 -->
+    <script src="{% static 'lib/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'lib/select2/js/i18n/es.js' %}"></script>
     <!-- Slimscroll -->
     <script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
     <!-- iCheck -->
@@ -387,12 +408,21 @@
     <script>
         $(function () {
             $('input').iCheck({
-                checkboxClass: 'icheckbox_square-green',
+                checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' /* optional */
             });
         });
     </script>
-{#    <script src="{% static 'js/javascripts.js' %}"></script>#}
+    {#    <!-- Poner Opciones del select 2 -->#}
+    {#    <script>#}
+    {#        $(function () {#}
+    {#            $('.select2').select2({#}
+    {#theme: "bootstrap",#}
+    {#                language: 'es'#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+    {#    <script src="{% static 'js/javascripts.js' %}"></script>#}
 {% endblock %}
 {% block extra_scripts %}{% endblock %}

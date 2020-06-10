@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% block matriculadosactive %} active {% endblock %}
+{% block contenttitle %}
+    Estadisticas
+{% endblock contenttitle %}
+
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+{#    <li><a href="{% url 'estadisticas' %}"><i class="fa fa-pie-chart"></i> Estadísticas</a></li>#}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-6">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-pie-chart"></i> Matriculados</h3>
+            </div>
+            <div class="box-body">
+                <div class="chart-responsive">
+                    <canvas id="pieChart" width="661" height="330"></canvas>
+                </div>   <!-- ./chart-responsive -->
+                {#                <div class="col-md-1">#}
+                {#                    <ul class="chart-legend clearfix">#}
+                {#                        <li><i class="fa fa-circle-o text-red"></i> Desactivados</li>#}
+                {#                        <li><i class="fa fa-circle-o text-green"></i> Activos</li>#}
+                {#                    </ul>#}
+                {#                </div>#}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-bar-chart"></i> Por País</h3>
+            </div>
+            <div class="box-body">
+                <div class="chart-responsive">
+                    <canvas id="lineChart" width="787" height="230"></canvas>
+                </div>
+                <!-- ./chart-responsive -->
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+{% block extra_scripts %}
+    <script src="{% static 'bower_components/chart.js/Chart.min.js' %}"></script>
+    <script>
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: {{ labels|safe }}, {#  ['Expedientes Eliminados', 'Expedientes Activos'],#}
+                datasets: [{
+                    fillColor: "#79D1CF",
+                    strokeColor: "#79D1CF",
+                    data: {{ data|safe }}, {#[12,3],#}
+                    backgroundColor: ['#00a65a', '#f56954']
+                }],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Expedientes'
+                },
+                responsive: true,
+
+                animation: {
+                    segmentShowStroke: true,
+                    segmentStrokeColor: '#fff',
+                    segmentStrokeWidth: 2,
+                    percentageInnerCutout: 50,
+                    animationSteps: 100,
+                    animationEasing: 'easeOutBounce',
+                    animateRotate: true,
+                    animateScale: false,
+                    responsive: true,
+                    maintainAspectRatio: true,
+                },
+
+                {#legend: {#}
+                {#    display: true,#}
+                {#    labels: {#}
+                {#        fontColor: 'rgb(255, 99, 132)'#}
+                {#    }#}
+                {# },#}
+            }
+        });
+    </script>
+    <script>
+        // Por país
+        var ctx = document.getElementById('lineChart').getContext('2d');
+        var lineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'Estadistica por País',
+                    fillColor: "#79D1CF",
+                    strokeColor: "#79D1CF",
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}

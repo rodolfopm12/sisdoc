@@ -36,7 +36,7 @@
 
         <div class="box-footer">
             <a href="{{ crear_url }}" class="btn btn-primary btn-flat btnTest">
-                <i class="fa fa-plus"></i> Nuevo registro
+                <i class="fa fa-plus"></i> {{ etiqueta }}
             </a>
              <a href="{{ list_url }}" class="btn btn-success btn-flat">
                 <i class="fa fa-refresh"></i> Actualizar
@@ -67,45 +67,4 @@
             {# });#}
         });
     </script>
-{#    <script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>#}
-    {#    <script>#}
-    {#        $(document).ready(function () {#}
-    {#            $('#example').DataTable();#}
-    {#        });#}
-    {#    </script>#}
-{#    <script>#}
-{#        $(function () {#}
-{#            $('#listados').DataTable({#}
-{#                'paging': false,#}
-{#                'lengthChange': false,#}
-{#                'searching': true,#}
-{#                'ordering': true,#}
-{#                'order': [[0, "desc"]],#}
-{#                'info': true, {# true #}
-{#                'autoWidth': false,#}
-{#                language: {#}
-{#                    'info': "Mostrando _START_ a _END_ de _MAX_ Entradas",#}
-{#                    'infoEmpty': "Mostrando 0 de 0 of 0 Entradas",#}
-{#                    'search': "Buscar",#}
-{#                    searchPlaceholder: "Buscar ...",#}
-{#                    'paginate': {#}
-{#                        "first": "Primero",#}
-{#                        "last": "Ultimo",#}
-{#                        "next": "siguiente",#}
-{#                        "previous": "anterior",#}
-{#                    }#}
-{#                }#}
-{#            });#}
-{#// Script de eliminar con modal#}
-{#            $('.eliminar').click(function (event) {#}
-{#                event.preventDefault();#}
-{#                event.stopImmediatePropagation();#}
-{##}
-{#                $('#eliminarconfirmado').attr('href', $(this).attr('href'));#}
-{##}
-{#                $('#modal-eliminar').modal('show');#}
-{#            });#}
-{##}
-{#        });#}
-{#    </script>#}
 {% endblock %}

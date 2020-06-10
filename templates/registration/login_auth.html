@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+{% block contenido_login %}
+<div style="text-align:center; margin:0 auto;">
+	<p style="margin-top: 30px; margin-bottom:30px; color:red;">No tiene permisos para ver esta sección. Debe ingresar con un usuario válido o pedir acceso a la supervisión.</p>
+<hr style="margin:50px"/>
+<a href="{% url 'logout' %}" class="btn btn-warning" style="text-align:center">Cerrar Sesión</a>
+<hr style="margin:50px"/>
+<a href="{% url 'inicio' %}" class="btn btn-secondary" style="text-align:center">Volver al inicio</a>
+</div>
+{% endblock %}

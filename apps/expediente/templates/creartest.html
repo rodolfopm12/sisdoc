@@ -1,0 +1,106 @@
+{% extends 'form.html' %}
+{#{% extends "layout.html" %}#}
+{#{% load static %}#}
+{#{% load i18n %}#}
+{#{% load bootstrap3 %}#}
+{#{% load widget_tweaks %}#}
+{#{% block crearexpedienteactive %} active {% endblock %}#}
+{#{% block extra_css %}#}
+{#    <link href="{% static 'css/chosen.min.css' %}" rel="stylesheet">#}
+{#    <link href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}"#}
+{#          rel="stylesheet">#}
+{#{% endblock %}#}
+{#{% block contenttitle %}#}
+{#    Crear Expediente (Anexo 2)#}
+{#{% endblock contenttitle %}#}
+{#{% block contentnavigation %}#}
+{#    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>#}
+{#    <li><a href="{{ list_url }}{#  {% url 'listar_expedientes' %} #} {# "><i class="fa fa-file-o"></i> Expediente</a></li> #}
+{#    <li><a href="{{ crear_url }}"><i class="fa fa-edit"></i>{{ etiqueta }}</a></li>#}
+{#{% endblock %}#}
+{#{% block content %}#}
+{#    <div class="box box-primary">#}
+{#        <div class="box-body">#}
+{#            <div class="box-header with-border" style="margin-bottom: 10px;">#}
+{#                <h3 class="box-title">#}
+{#                    {% if action == 'crear' %}#}
+{#                        <i class="fa fa-plus"></i>#}
+{#                    {% else %}#}
+{#                        <i class="fa fa-edit"></i>#}
+{#                    {% endif %}#}
+{#                    {{ title }}#}
+{#                </h3>#}
+{#            </div>#}
+{##}
+{#            <form id="expedienteForm" action="." method="POST"#}
+{#                  enctype="multipart/form-data">#}
+{#                {% csrf_token %}#}
+{#                <!-- Expediente -->#}
+{#                <div class="row">#}
+{#                    <div class="col-md-3">#}
+{#                        <div class="form-group">#}
+{#                            {{ form.numero_acuerdo.label_tag }} <span class="required"></span>#}
+{#                            {{ form.numero_acuerdo.errors }}#}
+{#                            {{ form.numero_acuerdo }}#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-md-3">#}
+{#                        <div class="form-group">#}
+{#                            {{ form.numero_expediente.label_tag }} <span class="required"></span>#}
+{#                            {{ form.numero_expediente.errors }}#}
+{#                            {{ form.numero_expediente }}#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-md-4">#}
+{#                        <div class="form-group">#}
+{#                            {{ form.estado.label_tag }}<span class="required"></span>#}
+{#                            {{ form.estado.errors }}#}
+{#                            {{ form.estado }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="box-footer">#}
+{#                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> {{ etiqueta }}</button>#}
+{#                    <a href="{% url 'listar_expedientes' %}" class="btn btn-default">Cancelar</a>#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_scripts %}#}
+{#    <script type="text/javascript" src="{% static 'js/chosen.jquery.min.js' %}"></script>#}
+{#    <script src="{% static 'js/moment-with-locales.min.js' %}"></script>#}
+{#    <script src="{% static 'bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>#}
+{##}
+    {#    Mensajes de errores#}
+{#    <script>#}
+{#        {% if form.errors %}#}
+{#            var errors = '';#}
+{#            {% for field in form %}#}
+{#                {% for error in field.errors %}#}
+{#                    errors += '{{ error }}\n';#}
+{#                {% endfor %}#}
+{#            {% endfor %}#}
+{#            {% for error in form.non_field_errors %}#}
+{#                errors += '{{ error }}\n';#}
+{#            {% endfor %}#}
+{#            Swal.fire({#}
+{#                title: 'Error!',#}
+{#                text: errors,#}
+{#                icon: 'error'#}
+{#            });#}
+{#        {% endif %}#}
+{##}
+{#        $('form').on('submit', function (e) {#}
+{#            e.preventDefault();#}
+{#            var parameters = new FormData(this);#}
+{#            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {#}
+{#                location.href = '{{ list_url }}';#}
+{#            });#}
+{#         });#}
+{##}
+{#    </script>#}
+{#{% endblock %}#}

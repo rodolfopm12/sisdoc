@@ -1,0 +1,39 @@
+{% extends "listbase.html" %}
+{% block listadoactive %} active {% endblock %}
+{% block contenttitle %}
+    Tesis
+{% endblock contenttitle %}
+
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+    <li><a href="{{ list_url }}"><i class="fa fa-file-o"></i> {{ entidad }}</a></li>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Título de Tesis</th>
+        <th class="text-center">Archivo</th>
+{#        <th class="text-center">Tamaño</th>#}
+        <th class="text-center">Fecha de Subida</th>
+        <th class="text-center">Fecha de Actualización</th>
+        <th class="text-center">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for tesis in object_list %}
+        <tr>
+            <td class="text-center">{{ tesis.id }}</td>
+            <td class="text-center">{{ tesis.titulo_tesis }}</td>
+            <td class="text-center">{{ tesis.archivo }}</td>
+{#            <td class="text-center">{{ tesis.tamano }}</td>#}
+            <td class="text-center">{{ tesis.created_at|date }}</td>
+            <td class="text-center">{{ tesis.updated_at }}</td>
+            <td class="text-center">
+{#                <a class="btn btn-warning" href="{% url '' tesis.pk %}"><i class="ion ion-edit"></i></a>#}
+                <a class="btn btn-danger eliminar" href="{% url 'eliminar_tesis' tesis.id %}"><i
+                        class="ion ion-trash-b"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

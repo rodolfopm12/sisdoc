@@ -77,14 +77,6 @@
                 icon: 'error'
             });
         {% endif %}
-        {# Alertas #}
-        $('form').on('submit', function (e) {
-            e.preventDefault();
-            var parameters = $(this).serializeArray();
-            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
-                location.href = '{{ list_url }}';
-            });
-        });
     </script>
     <script type="text/javascript">
         $(".chosen-select").chosen({

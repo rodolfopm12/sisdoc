@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block actualizartesisactive %} active {% endblock %}
+
+{% block contenttitle %} Insertar Tesis  {% endblock %}
+{#{% block extra_css %}#}
+{#     <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">#}
+{#{% endblock %}#}
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+    <li><a href="{% url 'tesisview' %}"><i class="fa fa-paper-plane"></i> Insertar Tesis</a></li>
+{% endblock %}
+
+{% block content %}
+    <form action="." method="POST" enctype="multipart/form-data">
+        <div class="box box-primary">
+            <div class="box-header with-border" style="margin-bottom: 10px;">
+                {#                <h3 class="box-title">Tesis</h3>#}
+                <h3 class="box-title">
+                    {% if action == 'crear' %}
+                        <i class="fa fa-plus"></i>
+                    {% else %}
+                        <i class="fa fa-edit"></i>
+                    {% endif %}
+                    {{ title }}
+                </h3>
+            </div>
+            <div class="box-body">
+                <input type="hidden" name="action" value="{{ action }}">
+                {% csrf_token %}
+                {#                <div class="row">#}
+                {#                    <div class="col-md-4">#}
+                {#                        <div class="form-group">#}
+                {#                            {{ form.titulo_tesis.label_tag }} <span class="required"></span>#}
+                {#                            {{ form.titulo_tesis.errors }}#}
+                {#                            {% render_field form.titulo_tesis class='form-control' %}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {##}
+                {##}
+                {#                    <div class="col-md-4">#}
+                {#                        <div class="form-group">#}
+                {#                            {{ form.archivo.label_tag }} <span class="required"></span>#}
+                {#                            {{ form.archivo.errors }}#}
+                {#                            {% render_field form.archivo class='form-control' %}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="expediente"> {{ field.label }}: <span class="required"></span></label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            {#        {{ form.as_p }}#}
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ etiqueta }}</button>
+                <a href="{% url 'listar_tesis' %}" class="btn btn-default">Cancelar</a>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+{% block extra_scripts %}
+    <script>
+        {# Mensajes de errores #}
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                title: 'Error!',
+                text: errors,
+                icon: 'error'
+            });
+        {% endif %}
+
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "listbase.html" %}
+{% block listarexpedienteactive %} active {% endblock %}
+{% block contenttitle %}
+    Listados de Expedientes
+{% endblock contenttitle %}
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+    <li><a href="{% url 'listar_expedientes' %}"><i class="fa fa-file-o"></i> Expedientes</a></li>
+    <li><a href="{% url 'expedientes_activos' %}"><i class="fa fa-file-o"></i> Expedientes Activos</a></li>
+{% endblock %}
+{% block menu_listado %}
+    <div class="box-info pull-right">
+        <a class="btn btn-info" href="{% url 'expedientes_activos' %}">Expedientes activos</a>
+        <a class="btn btn-default" href="{% url 'expedientes_desactivados' %}">Expedientes desactivados</a>
+    </div>
+{% endblock %}
+{% block columns %}
+    <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Número de Acuerdo</th>
+        <th class="text-center">Número de Expediente</th>
+        <th class="text-center">Fecha de Matrículación</th>
+        <th class="text-center">Fecha de Actualización</th>
+        <th class="text-center">Estado</th>
+        <th class="text-center">Opciones</th>
+    </tr>
+{% endblock %}
+{% block rows %}
+    {% for expediente in object_list %}
+        <tr>
+            <td class="text-center">{{ expediente.id }}</td>
+            <td class="text-center">{{ expediente.numero_acuerdo }}</td>
+            <td class="text-center">{{ expediente.numero_expediente }}</td>
+            <td class="text-center">{{ expediente.created_at|date }}</td>
+            <td class="text-center">{{ expediente.updated_at }}</td>
+            <td class="text-center">
+                {% if expediente.estado %}
+                    <i class='fa fa-check-square' style="color: green"></i>
+                {% else %}
+                    <i class='fa fa-minus-square' style="color: red"></i>
+                {% endif %}
+                {#                {{ expediente.estado|yesno:"Activo, Desactivado" }}#}
+                {# {{ expediente.estado }} #}
+            </td>
+
+            <td class="text-center">
+                <a class="btn btn-primary" href="#{# {% url 'eliminar_expediente' expediente.id %} #}"><i
+                        class="fa fa-search"></i></a>
+                <a class="btn btn-warning" href="{% url 'editar_expediente' expediente.pk %}"><i
+                        class="fa fa-edit"></i></a>
+                <a class="btn btn-danger eliminar" href="# {# {% url 'eliminar_expediente' expediente.id %} #}"><i
+                        class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

@@ -24,10 +24,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
                         {#                {% with profile=user|profile %}#}
-                        <img src="
-                                {{ user.profile.foto.url }}{#{% static 'media/miembros/' %}/{{ user.profile.foto }} #}"
-                             class="user-image" alt="User Image">
-                        {#                <img class="user-image" src="{% static 'media/../static/uploads/miembros/Ileana.png' %}" alt="User profile picture">#}
+                        <img src="{{ request.user.get_image }}" class="user-image" alt="User Image">
+
                         {#              {% endwith %}#}
 
                         <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
@@ -37,12 +35,13 @@
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            {#                <img src="{% static 'media/miembros/none.png' %}" class="img-circle" alt="User Image">#}
-                            <img class="img-circle" src="{{ user.profile.foto.url }}" alt="User profile picture">
+
+                            <img class="img-circle" src="{{ request.user.get_image }}" alt="User profile picture">
 
                             <p>
                                 {{ request.user.first_name }}
-                                <small>Miembro desde el {{ user.date_joined|date }}</small>
+                                {{ request.user.email }}
+                                <small>Último acceso: {{ user.last_login }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->

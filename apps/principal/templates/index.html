@@ -1,0 +1,189 @@
+{% extends 'basepres.html' %}
+{% load static %}
+{% load i18n  %}
+
+{% block content %}
+    <!-- Mouse -->
+    <div class="middle">
+      <div class="mouse"></div>
+    </div>
+    <!-- Slides pres1.jpg-->
+    <div class="slider" style="height: 400px;">
+      <ul class="slides">
+        <li>
+          <img src="{% static 'img/pres11.jpg' %}" alt="Escuela Nacional de Salud Pública">
+          <div class="caption left">
+            <h3>Escuela Nacional de Salud Pública</h3>
+            <h6 class="light">Institución autorizada para la formación doctoral en Ciencias de la Salud</h6>
+          </div>
+        </li>
+        <li>
+          <img src="{% static 'img/12.jpg' %}" alt="">
+          <div class="caption center-align">
+            <h3>Formación Doctoral en Ciencias de la Salud</h3>
+            <h5 class="light">La Escuela Nacional de Salud Pública es institución autorizada para desarrollar la fromación doctoral en este campo a través de un programa tutelar</h5>
+          </div>
+        </li>
+
+        <li>
+          <img src="{% static '/img/4.jpg' %}" alt="">
+          <div class="caption center-align">
+            <h3>Lorem, ipsum dolor.</h3>
+            <h5 class="light">Lorem ipsum dolor sit, amet consectetur adipiscing elit. Ipsa, praesentium</h5>
+          </div>
+        </li>
+
+{#        <li>#}
+{#          <img src="{% static '/img/2.jpg' %}" alt="">#}
+{#          <div class="caption center-align">#}
+{#            <h3>Lorem, ipsum dolor.</h3>#}
+{#            <h5 class="light">Lorem ipsum dolor sit, amet consectetur adipiscing elit. Ipsa, praesentium</h5>#}
+{#          </div>#}
+{#        </li>#}
+      </ul>
+    </div>
+
+    <!-- Card -->
+    <div class="container">
+      <div class="section">
+        <div class="row">
+          <!--1er card -->
+          <div class="col s12 m4">
+            <div class="card">
+              <div class="card-image waves-effect waves-block waves-light">
+                <img class="responsive-img activator" src="{% static '/img/office.jpg' %}" alt="Oficina">
+                <span class="card-title activator">Oficina de Doctorado</span>
+              </div>
+              <div class="card-content">
+                <span class="card-title activator">Oficina de Doctorado
+                  <i class="material-icons right">more_vert</i>
+                </span>
+                <p><a href="#">Enlace</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Oficina de Doctorado
+                  <i class="material-icons right">close</i>
+                </span>
+                <p>En la Escuela Nacional de Salud Pública (ENSAP), resulta oportuna la propuesta estratégica para
+                  desarrollar un proceso de obtención del grado científico de Doctor en Ciencias de la Salud. Es
+                  conocido que, dentro del sector salud, difieren el campo de investigación y acción de las Ciencias
+                  Médicas y el de la Salud Pública, aunque es innegable su fuerte vinculación. Esta diferencia de
+                  enfoque se sustenta en la diversidad de las disciplinas que la conforman, es decir, las denominadas
+                  ciencias socio-sanitarias: Epidemiología, Bioestadística, Gerencia, Economía de la Salud, Demografía,
+                  Psicología de la Salud, Sociología, Ingeniería Sanitaria, Ciencias del Ambiente, en fin, aquellas
+                  dirigidas a identificar y solucionar los problemas y necesidades de salud de la población en su
+                  conjunto.</p>
+              </div>
+            </div>
+          </div>
+          <!--2do card -->
+                    <div class="col s12 m4">
+            <div class="card">
+              <div class="card-image waves-effect waves-block waves-light">
+                <img class="responsive-img activator" src="{% static '/img/4.jpg' %}" alt="">
+                <span class="card-title activator">Programa</span>
+              </div>
+              <div class="card-content">
+                <span class="card-title activator">Programa de Doctorado en Ciencias de la Salud
+                  <i class="material-icons right">more_vert</i>
+                </span>
+                <p><a class="btn light-blue darken-4" href="{% static 'uploads/Programa Doctorado Ciencias de la Salud.pdf' %}" target="_blank"><i class="fa fa-download"></i> Programa de Doctorado</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Programa de Doctorado en Ciencias de la Salud
+                  <i class="material-icons right">close</i>
+                </span>
+                <p>El Programa de Doctorado en Ciencias de Salud se desarrolla en la Escuela Nacional de Salud Pública de Cuba (Ensap), institución que concibe la formación doctoral como uno de sus procesos sustantivos, al que le confiere la mayor importancia académica y científica. La institución dispone de las instancias organizativas y las relaciones institucionales necesarias para la conducción eficiente del proceso de formación doctoral. Cuenta además con un claustro de profesores, expertos en diferentes especialidades y disciplina, poseedores de las más altas categorías científicas y académicas. El programa de doctorado en Ciencias de la Salud se fundamenta en la Salud Pública, reconocida como una ciencia transdisciplinaria, con un importante aporte desde la dirección, la epidemiologia, la estadística y las ciencias sociales, interconectados entre sí.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--3er card -->
+            <div class="col s12 m4">
+            <div class="card">
+              <div class="card-image waves-effect waves-block waves-light">
+                <img class="responsive-img activator" src="{% static '/img/4.jpg' %}" alt="">
+                <span class="card-title activator">Requisitos de admisión</span>
+              </div>
+              <div class="card-content">
+                <span class="card-title activator">Requisitos de admisión
+                  <i class="material-icons right">more_vert</i>
+                </span>
+                <p><a href="#">Enlace</a></p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Requisitos de admisión
+                  <i class="material-icons right">close</i>
+                </span>
+                <p>El programa de Doctorado en Ciencias de la Salud está dirigido a profesionales de cualquier rama del saber que posean títulos de Master o especialista relacionado con las ciencias de la Salud, o que puedan probar conocimientos en el área de la Salud Pública mediante alguna forma de evaluación aprobada por el comité de doctorado. El tema de Tesis deberá responder a alguna de las líneas de investigación del programa, lo que será constatado por el Comité de Doctorado de la ENSAP y aprobado posteriormente por su comisión de grado científicos. Los solicitantes cubanos deberán contar con el compromiso de la institución donde trabajan para el cumplimiento del cronograma de doctorado, mediante una carta del jefe de cada institución. Los solicitantes extranjeros deberán presentar el título universitario legalizado ante el consulado cubano en su país, autentificado en el <strong><a href="http://www.minrex.gob.cu/" target="_blank">Ministerio de Relaciones Exteriores (MINREX)</a></strong> y registrado en el <strong><a href="https://www.mes.gob.cu/" target="_blank"> Ministerio de Educación Superior (MES)</a></strong> o <strong><a href="https://salud.msp.gob.cu/" target="_blank"> Ministerio de Salud Pública (MINSAP)</a></strong>, en este último caso cuando son médicos(as) o estomatólogos(as).
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Fin card -->
+
+    <!-- Parallax -->
+    <div class="parallax-container">
+      <div class="parallax"><img src="{% static '/img/11.jpg' %}"></div>
+    </div>
+
+    <div class="container" id="promo">
+      <div class="section">
+        <!--   Icon Section   -->
+        <div class="row">
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h2 class="center brown-text"><i class="material-icons">folder</i></h2>
+              <h5 class="center">Respaldo material académico</h5>
+              <p class="light">La Escuela Nacional de Salud Pública pone a disposición del Programa de Doctorado de Ciencias de la Salud las siguientes facilidades materiales: laboratorio de computación con red informática interna y conexión de internet, punto de presencia con conexión a internet, Biblioteca, Aulas habilitadas adecuadamente, Medios auxiliares de enseñanza y servicio de hospedaje y alimentación para personas matriculadas de otras provincias o países. Acompañará la formación doctoral a través de tutorías, asesorías y ejercicios docentes de rigor.</p>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h2 class="center brown-text"><i class="material-icons md-48 orange600">settings</i></h2>
+              <h5 class="center">Desarrollo del Programa</h5>
+              <p class="light">El programa se desarrolla durante cuatro años de duración máximo, dentro de los cuales habrá de realizarse tres exámenes de mínimos: Especialidad, Problemas Sociales de la ciencia y la tecnología e Idioma Extranjero. Además, durante este período se realizarán tres talleres: De avances, Taller previo al mínimo de especialidad, taller previo a la pre-defensa. para la obtención del grado científico deberá aprobarse los ejercicios de pre-defensa y defensa, y antes del primero de estos haber publicados los resultados de su tesis en revistas aceptadas por el comité de doctorado y haber presentado dos eventos científicos nacionales e internacionales. Cada calendario se adecua, a las particularidades de cada doctorando(a) mediante su cronograma de trabajo individual.   </p>
+            </div>
+
+          </div>
+            <div class="col s12 m4">
+            <div class="icon-block">
+              <h2 class="center brown-text"><i class="material-icons">school</i></h2>
+              <h5 class="center">Egresados</h5>
+              <p class="light">Los egresados del Programa de Doctorado en Ciencias de la Salud son profesionales con profundos conocimientos en cuanto al abordaje social de la salud, capaces de realizar y dirigir investigaciones de gran alcance, en caminadas al mantenimiento de la salud de las poblaciones, comunidades y grupos humanos, con la articulación de todos los sectores sociales y la propia participación de la población. los egresados contarán con los siguientes valores: Independencia científica, Criticismo Científico, Consagración a la investigación científica, creatividad en la investigación en Salud Pública, responsabilidad científica, participación social y tolerancia a la incertidumbre.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parallax -->
+    <div class="parallax-container">
+      <div class="parallax"><img src="{% static '/img/2.jpg' %}"></div>
+    </div>
+
+    <!-- Antes del Footer-->
+
+    <div class="container">
+      <div class="section">
+        <div class="row">
+          <div class="divider"></div>
+          <div class="col s12 center">
+            <h3><i class="mdi-content-send brown-text"></i></h3>
+            <h4>Comité de doctorado </h4>
+            <p class="left-align">Es el órgano encargado de organizar las actividades para la formación del doctorando que son fundamentalmente la relativas a la investigación, mediante su integración a los grupos de la propia ENSAP dedicados a esta actividad. También se ocupa de la formación teórico metodológica en función de las necesidades, en coordinación con las formas docentes relacionadas con el área del conocimiento de la Salud Pública. En un primer momento el comité de doctorado asume la evaluación sobre la pertinencia al campo de la Salud Pública de los proyectos que presentan los y las solicitantes.    </p>
+            <div class="divider"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Parallax -->
+
+{% endblock %}
+
+<script src="{% static 'js/slide.js' %}"></script>

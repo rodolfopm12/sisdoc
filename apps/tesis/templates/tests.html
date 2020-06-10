@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block recursoactive %} active {% endblock %}
+
+{% block contenttitle %} Test  {% endblock %}
+{% block extra_css %}
+
+{% endblock %}
+{% block contentnavigation %}
+    <li><a href="{% url 'inicio' %}"><i class="fa fa-home"></i> Inicio</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="box-header with-border" style="margin-bottom: 10px;">
+                <h3 class="box-title">Test</h3>
+            </div>
+            <div class="form-group">
+                <label>Grupos</label>
+                {{ form.groups }}
+            </div>
+            <div class="form-group">
+                <label>Continente</label>
+                {{ form.continente }}
+            </div>
+            <div class="form-group">
+                <label>País</label>
+                {{ form.pais }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block extra_scripts %}
+    <script>
+        $(function () {
+            $('.select2').select2({
+                {#theme: "bootstrap",#}
+                language: 'es'
+            });
+            $('select[name="continente"]').select2({
+                language: 'es',
+                placeholder: 'Esto es una prueba',
+                allowClear: true,
+            })
+        });
+    </script>
+    var select_pais = $('select[name="pais"]');
+    $(function () {
+    $('.select2').select2({
+    theme: "bootstrap",
+    language: 'es',
+    placeholder: 'Seleccione el Grupo o Grupos al cual va a pertenecer el Usuario',
+    allowClear: true
+    });
+
+    });
+
+    $('select[name="continente"]').on('change', function () {
+    var id = $(this).val();
+    var options ='
+    <option value="">-------------</option>';
+    if (id == '') {
+    select_pais.html(options);
+    return false;
+    }
+    $.ajax({
+    url: windows.location.pathname,
+    type: 'POST',
+    data: {
+    'action': 'search_pais_id',
+    'id': id
+    },
+    dataType: 'json',
+    }).done(function (data) {
+    if (!data.hasOwnProperty('error')) {
+    /*$.each(data, function (key, value) {
+    options +='
+    <option value="' + value.id + '">' + value.name + '</option>';
+    });*/
+    select_pais.select2({
+    theme: "bootstrap",
+    language: 'es',
+    data: data,
+    placeholder: 'Seleccione el País',
+    allowClear: true
+    });
+
+    return false;
+    }
+    message_error(data.error)
+    }).fail(function (jqXHR, testStatus, errorThrown) {
+    alert(testStatus + ': ' + errorThrown);
+    }).always(function (data) {
+    //select_pais.html(option);
+    });
+    });
+    </script>
+{% endblock %}

@@ -1,76 +1,79 @@
 {% load static %}
 {% load i18n %}
-
+{% load extra_tags %}
 {% block boxes %}
-    <div class="row">
-    <div class="col-lg-3 col-xs-6">
-    <!-- small box -->
-          <div class="small-box bg-yellow-gradient">
-            <div class="inner">
-              <h3>{{ cantidad_expedientes }}</h3>
-              <p>Doctorandos Matriculados</p>
+    {% if user|has_role:'ROLE_DOCTORANDO' %}
+
+    {% else %}
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow-gradient">
+                    <div class="inner">
+                        <h3>{{ cantidad_expedientes }}</h3>
+                        <p>Doctorandos Matriculados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="{% url 'expedientes_activos' %}" class="small-box-footer">
+                        Mas.. <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+
             </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green-gradient">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>Graduados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-university"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                        Mas.. <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
             </div>
-            <a href="{% url 'expedientes_activos' %}" class="small-box-footer">
-              Mas.. <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
 
-  </div>
-             <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green-gradient">
-            <div class="inner">
-              <h3>65</h3>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red-gradient">
+                    <div class="inner">
+                        <h3>{{ cantidad_usuarios }}{# <sup style="font-size: 20px">%</sup>#}</h3>
 
-              <p>Graduados</p>
+                        <p>Usuarios Registrados</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-android-contacts"></i>
+                    </div>
+                    <a href="{% url 'listado_usuarios' %}" class="small-box-footer">
+                        Más... <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
             </div>
-            <div class="icon">
-              <i class="ion ion-university"></i>
+
+
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua-gradient">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>Publicaciones</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-document"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                        Mas.. <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
             </div>
-            <a href="#" class="small-box-footer">
-              Mas.. <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-         </div>
 
-  <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red-gradient">
-            <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Estadistica</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-              Más... <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-   </div>
-
-
-
-     <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua-gradient">
-            <div class="inner">
-              <h3>65</h3>
-
-              <p>Publicaciones</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-document"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-              Mas.. <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-         </div>
-
-</div>
+        </div>
+    {% endif %}
 {% endblock %}

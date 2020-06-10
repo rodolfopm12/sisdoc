@@ -28,6 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
 
 # Application definition
 DJANGO_APPS = [
@@ -40,6 +41,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'debug_toolbar',  # Debug Toolbar
     'naomi',  # Envío de correo por navegador
     'widget_tweaks',  # Formulario de boostrap
     'sorl.thumbnail',  # Cache imagenes
@@ -51,11 +53,20 @@ THIRD_PARTY_APPS = [
     'bootstrap3',
 ]
 LOCAL_APPS = [
-
+    'apps.usuario',
+    'apps.login',
+    'apps.principal',
+    'apps.contacto',
+    'apps.expediente',
+    # 'apps.evento',
+    # 'apps.publicaciones',
+    'apps.tesis',
+    'apps.reportes',
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware', # Debug Toolbar
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,6 +79,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+# Número de días que el token es valido
+PASSWORD_RESET_TIMEOUT_DAYS = 5
 
 TEMPLATES = [
     {
@@ -143,17 +156,21 @@ DATE_FORMAT = '%d/%m/%Y'
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
 DECIMAL_SEPARATOR = '.'
 
+AUTH_USER_MODEL = 'usuario.User'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+STATICFILES_DIRS = [
     # Comentar cuando se despliegue el proyecto
     os.path.join(BASE_DIR, 'static'),
-)
+]
 STATIC_FILES = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
 # Thumbnails
 # THUMBNAIL_DEBUG = True
 
@@ -197,3 +214,16 @@ if DEBUG:
 # ~ EMAIL_USE_TLS = True
 # ~ EMAIL_IMAP_HOST = 'ensap@ensap.sld.cu'
 # ~ EMAIL_IMAP_PORT = '993'
+
+# Auth settings
+LOGIN_REDIRECT_URL = '/inicio'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+# LOGIN_REDIRECT_URL = '/accounts/profile/'
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_HTTPONLY = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+INTERNAL_IPS = ['127.0.0.1',]

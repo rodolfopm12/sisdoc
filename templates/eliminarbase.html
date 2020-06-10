@@ -22,9 +22,23 @@
 
             <div class="box-body">
                 {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al querer guardar el registro</h5>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
                 <div class="alert alert-danger alert-dismissible">
                     <h4><i class="icon fa fa-warning"></i> Alerta</h4>
-                    ¿Esta seguro de eliminar el Expediente número {{ object.id }}?
+                    ¿Esta seguro de eliminar el {{ entidad }} número {{ object.id }}?
                 </div>
             </div>
             <div class="box-footer">
@@ -37,4 +51,15 @@
             </div>
         </div>
     </form>
+{% endblock %}
+{% block extra_scripts %}
+    <script>
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de eliminar el siguiente registro?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+    </script>
 {% endblock %}
